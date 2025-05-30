@@ -161,3 +161,9 @@ cython_debug/
 
 # Flet
 storage/
+
+# outras exclusões
+build
+dist
+imc_app.spec
+generated-a314e3f1dc6298275e5e553ae4f456cc45071f2fe33838087140743c5bd2c64d.ico

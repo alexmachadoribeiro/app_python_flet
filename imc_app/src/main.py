@@ -23,8 +23,28 @@ def main(page: ft.Page):
                 imc = peso.value / altura.value**2
                 peso.value = ""
                 altura.value = ""
-                result.value = f"O valor do IMC do usuário é: {imc:,.2f}."
+                result.value = f"O valor do IMC: {imc:,.2f}."
 
+                if imc < 18.5:
+                    diagnostico.value = "Você está abaixo do peso."
+                    diagnostico.color = ft.Colors.BLACK
+                elif imc < 25:
+                    diagnostico.value = "Você está no seu peso ideal."
+                    diagnostico.color = ft.Colors.BLUE
+                elif imc < 30:
+                    diagnostico.value = "Você está acima do seu peso."
+                    diagnostico.color = ft.Colors.GREEN
+                elif imc < 35:
+                    diagnostico.value = "Você está obeso."
+                    diagnostico.color = ft.Colors.YELLOW
+                elif imc < 40:
+                    diagnostico.value = "Você está com obesidade nível II."
+                    diagnostico.color = ft.Colors.ORANGE
+                else:
+                    diagnostico.value = "Você está com obesidade mórbida."
+                    diagnostico.color = ft.Colors.RED
+
+                diagnostico.update()
                 page.update()
             elif peso.value < 0 and altura.value > 0:
                 peso.error_text = "Valor inválido."
@@ -53,16 +73,22 @@ def main(page: ft.Page):
         on_submit=calcular_imc
     )
     result = ft.Text(size=20, weight="bold")
+    diagnostico = ft.Text(size=15, weight="bold")
 
     page.add(
         ft.SafeArea(
             ft.Row(
-                [ft.Text("\nÍndice de Massa Corporal")]
+                [ft.Text(
+                    "\nÍndice de Massa Corporal", 
+                    size=30, 
+                    weight="bold"
+                )],
+                alignment=ft.MainAxisAlignment.CENTER
             )
         ),
         peso, altura,
         ft.ElevatedButton("Calcular IMC", on_click=calcular_imc),
-        result
+        result, diagnostico
     )
 
 
